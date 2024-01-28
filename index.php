@@ -11,7 +11,7 @@
     <div class="content fullpage-message__content">
       <h1>Theme Customizer</h1>
       <p><?php echo get_theme_mod( 'themename_theme_option_text_input', 'Theme customizer input text.' ); ?></p>
-      <p>Number from customizer input is: <?php echo get_theme_mod( 'themename_theme_option_number_input', 'NOT SET' ); ?></p>
+      <p>Number from customizer input is: <?php echo get_theme_mod( 'themename_theme_option_number_input', '0' ); ?></p>
     </div>
   </div>
   <?php wp_footer(); ?>

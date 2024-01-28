@@ -11,6 +11,8 @@ add_action('wp_enqueue_scripts', 'theme_customizer_scripts');
 //  = https://developer.wordpress.org/themes/customize-api/customizer-objects/ =
 //  ============================================================================
 
+// remove_theme_mod( 'themename_theme_option_text_input' );
+
 function themename_customize_register($wp_customize)
 {
 
@@ -35,10 +37,11 @@ function themename_customize_register($wp_customize)
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_text_input', array(
-    'default'    => 'Text input',
+    'default'    => 'Theme customizer input text.',
     'capability' => 'edit_theme_options',
     'type'       => 'theme_mod',
     'transport'  => 'refresh',
+    'validate_callback' => 'validate_text_input',
   ));
 
   $wp_customize->add_control('themename_text_control', array(
@@ -92,3 +95,11 @@ function themename_customize_register($wp_customize)
 }
 
 add_action('customize_register', 'themename_customize_register');
+
+function validate_text_input( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value ) {
+      $validity->add( 'required', __( 'You must type some text.' ) );
+  }
+  return $validity;
+}
