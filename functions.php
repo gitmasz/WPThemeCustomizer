@@ -67,8 +67,28 @@ function themename_customize_register($wp_customize)
     'description' => __('This is number input option description.'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_number_input',
-    'priority'    => 1,
+    'priority'    => 2,
   ));
+
+  //  =============================
+  //  = Color Picker              =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_color_picker', array(
+    'default'           => '#ff0000',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'sanitize_callback' => 'sanitize_hex_color',
+    'transport'         => 'refresh',
+  ));
+
+  $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'themename_color_control', array(
+    'label'       => __('Color picker', 'themename'),
+    'description' => __('This is color picker option description.'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_color_picker',
+    'priority'    => 3,
+  )));
 }
 
 add_action('customize_register', 'themename_customize_register');
