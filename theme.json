@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 2,
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"color": "#00AAD4",
+					"name": "Rich Electric Blue",
+					"slug": "rich-electric-blue"
+				},
+				{
+					"color": "#0088AA",
+					"name": "Blue (Munsell)",
+					"slug": "blue-munsell"
+				},
+				{
+					"color": "#666666",
+					"name": "Granite Gray",
+					"slug": "granite-gray"
+				},
+				{
+					"color": "#FFAA22",
+					"name": "Bright Yellow (Crayola)",
+					"slug": "bright-yellow-crayola"
+				}
+			]
+		}
+  }
+}
