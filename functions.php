@@ -47,7 +47,7 @@ function themename_customize_register($wp_customize)
   $wp_customize->add_control('themename_text_control', array(
     'type'        => 'text',
     'label'       => __('Text input', 'themename'),
-    'description' => __('This is text input option description.'),
+    'description' => __('This is text input option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_text_input',
     'priority'    => 1,
@@ -62,12 +62,13 @@ function themename_customize_register($wp_customize)
     'capability' => 'edit_theme_options',
     'type'       => 'theme_mod',
     'transport'  => 'refresh',
+    'validate_callback' => 'validate_number_input',
   ));
 
   $wp_customize->add_control('themename_number_control', array(
     'type'        => 'number',
     'label'       => __('Number input', 'themename'),
-    'description' => __('This is number input option description.'),
+    'description' => __('This is number input option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_number_input',
     'priority'    => 2,
@@ -87,7 +88,7 @@ function themename_customize_register($wp_customize)
 
   $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'themename_color_control', array(
     'label'       => __('Color picker', 'themename'),
-    'description' => __('This is color picker option description.'),
+    'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
     'priority'    => 3,
@@ -99,7 +100,15 @@ add_action('customize_register', 'themename_customize_register');
 function validate_text_input( $validity, $value ) {
   $value = trim($value ?? '');
   if ( !$value ) {
-      $validity->add( 'required', __( 'You must type some text.' ) );
+      $validity->add( 'required', __( 'You must type some text.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_number_input( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value || !is_numeric($value) ) {
+      $validity->add( 'required', __( 'You have to enter a number.', 'themename' ) );
   }
   return $validity;
 }
