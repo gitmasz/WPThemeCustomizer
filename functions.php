@@ -84,6 +84,7 @@ function themename_customize_register($wp_customize)
     'type'              => 'theme_mod',
     'sanitize_callback' => 'sanitize_hex_color',
     'transport'         => 'refresh',
+    'validate_callback' => 'validate_hex_color',
   ));
 
   $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'themename_color_control', array(
@@ -109,6 +110,14 @@ function validate_number_input( $validity, $value ) {
   $value = trim($value ?? '');
   if ( !$value || !is_numeric($value) ) {
       $validity->add( 'required', __( 'You have to enter a number.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_hex_color( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value || !preg_match('/^#([a-f0-9]{6}|[a-f0-9]{3})$/', $value) ) {
+      $validity->add( 'required', __( 'You have to enter correct hex color.', 'themename' ) );
   }
   return $validity;
 }
