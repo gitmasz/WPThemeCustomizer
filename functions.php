@@ -77,6 +77,33 @@ function themename_customize_register($wp_customize)
   ));
 
   //  =============================
+  //  = Range Input              =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_range_input', array(
+    'default'    => 6,
+    'capability' => 'edit_theme_options',
+    'type'       => 'theme_mod',
+    'transport'  => 'refresh',
+  ));
+
+  $wp_customize->add_control('themename_range_control', array(
+    'type'        => 'range',
+    'label'       => __('Range input', 'themename'),
+    'description' => __('This is range input option description.', 'themename'),
+    'input_attrs' => array(
+      'min' => -20,
+      'max' => 20,
+      'step' => 2,
+      'onfocus' => 'const rangeValue = document.createElement("span"); rangeValue.innerText = this.value; if (!this.nextElementSibling) { this.parentElement.appendChild(rangeValue) };',
+      'oninput' => 'if (this.nextElementSibling) {this.nextElementSibling.innerText = this.value}',
+    ),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_range_input',
+    'priority'    => 3,
+  ));
+
+  //  =============================
   //  = Color Picker              =
   //  =============================
 
@@ -94,7 +121,7 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 3,
+    'priority'    => 4,
   )));
 }
 

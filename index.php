@@ -12,6 +12,7 @@
       <h1>Theme Customizer</h1>
       <p><?php echo get_theme_mod( 'themename_theme_option_text_input', 'Theme customizer input text.' ); ?></p>
       <p>Number from customizer input is: <?php echo get_theme_mod( 'themename_theme_option_number_input', '0' ); ?></p>
+      <p>Number from customizer range is: <?php echo get_theme_mod( 'themename_theme_option_range_input', '6' ); ?></p>
     </div>
   </div>
   <?php wp_footer(); ?>
