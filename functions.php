@@ -40,6 +40,7 @@ function themename_customize_register($wp_customize)
     'default'    => 'Theme customizer input text.',
     'capability' => 'edit_theme_options',
     'type'       => 'theme_mod',
+    'sanitize_callback' => 'sanitize_text_field', // converts value to text only (no HTML tags)
     'transport'  => 'refresh',
     'validate_callback' => 'validate_text_input',
   ));
@@ -61,6 +62,7 @@ function themename_customize_register($wp_customize)
     'default'    => 0,
     'capability' => 'edit_theme_options',
     'type'       => 'theme_mod',
+    'sanitize_callback' => 'absint', //converts value to a non-negative integer
     'transport'  => 'refresh',
     'validate_callback' => 'validate_number_input',
   ));
@@ -82,7 +84,7 @@ function themename_customize_register($wp_customize)
     'default'           => '#ff0000',
     'capability'        => 'edit_theme_options',
     'type'              => 'theme_mod',
-    'sanitize_callback' => 'sanitize_hex_color',
+    'sanitize_callback' => 'sanitize_hex_color', // converts value to hex color
     'transport'         => 'refresh',
     'validate_callback' => 'validate_hex_color',
   ));
