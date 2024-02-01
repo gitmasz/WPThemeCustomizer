@@ -6,6 +6,7 @@ Description: Example of global theme settings and styles and WP Customizer API t
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Text Domain: themename
+Domain Path: /languages
 */
 
 html {

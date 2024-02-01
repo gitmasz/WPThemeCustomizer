@@ -87,16 +87,17 @@ function themename_customize_register($wp_customize)
     'transport'  => 'refresh',
   ));
 
+  $current_range_value = get_theme_mod( 'themename_theme_option_range_input', '6' );
+
   $wp_customize->add_control('themename_range_control', array(
     'type'        => 'range',
     'label'       => __('Range input', 'themename'),
-    'description' => __('This is range input option description.', 'themename'),
+    'description' => __('This is range input option description. Value: ', 'themename') . '<i id="rangeInputValue">'.$current_range_value.'</i>',
     'input_attrs' => array(
       'min' => -20,
       'max' => 20,
       'step' => 2,
-      'onfocus' => 'const rangeValue = document.createElement("span"); rangeValue.innerText = this.value; if (!this.nextElementSibling) { this.parentElement.appendChild(rangeValue) };',
-      'oninput' => 'if (this.nextElementSibling) {this.nextElementSibling.innerText = this.value}',
+      'oninput' => 'if (document.getElementById("rangeInputValue")) {document.getElementById("rangeInputValue").innerText = this.value}',
     ),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_range_input',
