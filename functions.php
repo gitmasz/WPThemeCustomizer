@@ -105,6 +105,28 @@ function themename_customize_register($wp_customize)
   ));
 
   //  =============================
+  //  = URL Input              =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_url_input', array(
+    'default'    => 'https://imasz.net',
+    'capability' => 'edit_theme_options',
+    'type'       => 'theme_mod',
+    'sanitize_callback' => 'esc_url_raw', // cleans URL from all invalid characters
+    'transport'  => 'refresh',
+    'validate_callback' => 'validate_url_input',
+  ));
+
+    $wp_customize->add_control('themename_range_control', array(
+    'type'        => 'url',
+    'label'       => __('URL input', 'themename'),
+    'description' => __('This is URL input option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_url_input',
+    'priority'    => 4,
+  ));
+
+  //  =============================
   //  = Color Picker              =
   //  =============================
 
@@ -122,7 +144,7 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 4,
+    'priority'    => 5,
   )));
 }
 
@@ -140,6 +162,14 @@ function validate_number_input( $validity, $value ) {
   $value = trim($value ?? '');
   if ( !$value || !is_numeric($value) ) {
       $validity->add( 'required', __( 'You have to enter a number.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_url_input( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value || !preg_match('/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/', $value) ) {
+      $validity->add( 'required', __( 'You have to enter correct URL with HTTP or HTTPS.', 'themename' ) );
   }
   return $validity;
 }
