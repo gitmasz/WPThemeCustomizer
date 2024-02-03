@@ -77,7 +77,7 @@ function themename_customize_register($wp_customize)
   ));
 
   //  =============================
-  //  = Range Input              =
+  //  = Range Input               =
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_range_input', array(
@@ -105,7 +105,7 @@ function themename_customize_register($wp_customize)
   ));
 
   //  =============================
-  //  = URL Input              =
+  //  = URL Input                 =
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_url_input', array(
@@ -117,13 +117,34 @@ function themename_customize_register($wp_customize)
     'validate_callback' => 'validate_url_input',
   ));
 
-    $wp_customize->add_control('themename_range_control', array(
+    $wp_customize->add_control('themename_url_control', array(
     'type'        => 'url',
     'label'       => __('URL input', 'themename'),
     'description' => __('This is URL input option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_url_input',
     'priority'    => 4,
+  ));
+
+  //  =============================
+  //  = Tel Input                 =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_tel_input', array(
+    'default'    => '+48 123 456 789',
+    'capability' => 'edit_theme_options',
+    'type'       => 'theme_mod',
+    'transport'  => 'refresh',
+    'validate_callback' => 'validate_tel_input',
+  ));
+
+    $wp_customize->add_control('themename_tel_control', array(
+    'type'        => 'tel',
+    'label'       => __('Tel input', 'themename'),
+    'description' => __('This is tel input option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_tel_input',
+    'priority'    => 5,
   ));
 
   //  =============================
@@ -144,7 +165,7 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 5,
+    'priority'    => 6,
   )));
 }
 
@@ -170,6 +191,14 @@ function validate_url_input( $validity, $value ) {
   $value = trim($value ?? '');
   if ( !$value || !preg_match('/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/', $value) ) {
       $validity->add( 'required', __( 'You have to enter correct URL with HTTP or HTTPS.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_tel_input( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value || !preg_match('/^[\+\s0-9\-_]{3,20}$/', $value) ) {
+      $validity->add( 'required', __( 'You have to enter correct phone number.', 'themename' ) );
   }
   return $validity;
 }
