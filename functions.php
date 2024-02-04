@@ -37,11 +37,11 @@ function themename_customize_register($wp_customize)
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_text_input', array(
-    'default'    => 'Theme customizer input text.',
-    'capability' => 'edit_theme_options',
-    'type'       => 'theme_mod',
+    'default'           => 'Theme customizer input text.',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
     'sanitize_callback' => 'sanitize_text_field', // converts value to text only (no HTML tags)
-    'transport'  => 'refresh',
+    'transport'         => 'refresh',
     'validate_callback' => 'validate_text_input',
   ));
 
@@ -59,11 +59,11 @@ function themename_customize_register($wp_customize)
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_number_input', array(
-    'default'    => 0,
-    'capability' => 'edit_theme_options',
-    'type'       => 'theme_mod',
-    'sanitize_callback' => 'absint', //converts value to a non-negative integer
-    'transport'  => 'refresh',
+    'default'           => 0,
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'sanitize_callback' => 'absint', // converts value to a non-negative integer
+    'transport'         => 'refresh',
     'validate_callback' => 'validate_number_input',
   ));
 
@@ -94,10 +94,10 @@ function themename_customize_register($wp_customize)
     'label'       => __('Range input', 'themename'),
     'description' => __('This is range input option description. Value: ', 'themename') . '<i id="rangeInputValue">'.$current_range_value.'</i>',
     'input_attrs' => array(
-      'min' => -20,
-      'max' => 20,
-      'step' => 2,
-      'oninput' => 'if (document.getElementById("rangeInputValue")) {document.getElementById("rangeInputValue").innerText = this.value}',
+      'min'       => -20,
+      'max'       => 20,
+      'step'      => 2,
+      'oninput'   => 'if (document.getElementById("rangeInputValue")) {document.getElementById("rangeInputValue").innerText = this.value}',
     ),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_range_input',
@@ -109,11 +109,11 @@ function themename_customize_register($wp_customize)
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_url_input', array(
-    'default'    => 'https://imasz.net',
-    'capability' => 'edit_theme_options',
-    'type'       => 'theme_mod',
+    'default'           => 'https://imasz.net',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
     'sanitize_callback' => 'esc_url_raw', // cleans URL from all invalid characters
-    'transport'  => 'refresh',
+    'transport'         => 'refresh',
     'validate_callback' => 'validate_url_input',
   ));
 
@@ -131,10 +131,10 @@ function themename_customize_register($wp_customize)
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_tel_input', array(
-    'default'    => '+48 123 456 789',
-    'capability' => 'edit_theme_options',
-    'type'       => 'theme_mod',
-    'transport'  => 'refresh',
+    'default'           => '+48 123 456 789',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'transport'         => 'refresh',
     'validate_callback' => 'validate_tel_input',
   ));
 
@@ -145,6 +145,28 @@ function themename_customize_register($wp_customize)
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_tel_input',
     'priority'    => 5,
+  ));
+
+  //  =============================
+  //  = Email Input               =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_email_input', array(
+    'default'           => 'testing@hotmail.com',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'sanitize_callback' => 'sanitize_email', // removes all invalid characters
+    'transport'         => 'refresh',
+    'validate_callback' => 'validate_email_input',
+  ));
+
+    $wp_customize->add_control('themename_email_control', array(
+    'type'        => 'email',
+    'label'       => __('Email input', 'themename'),
+    'description' => __('This is email input option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_email_input',
+    'priority'    => 6,
   ));
 
   //  =============================
@@ -165,7 +187,7 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 6,
+    'priority'    => 7,
   )));
 }
 
@@ -199,6 +221,14 @@ function validate_tel_input( $validity, $value ) {
   $value = trim($value ?? '');
   if ( !$value || !preg_match('/^[\+\s0-9\-_]{3,20}$/', $value) ) {
       $validity->add( 'required', __( 'You have to enter correct phone number.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_email_input( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value || !preg_match('/^[\-0-9a-zA-Z\.\+_]+@[\-0-9a-zA-Z\.\+_]+\.[a-zA-Z]{2,5}$/', $value) ) {
+      $validity->add( 'required', __( 'You have to enter correct email.', 'themename' ) );
   }
   return $validity;
 }
