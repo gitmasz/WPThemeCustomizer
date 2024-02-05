@@ -191,6 +191,27 @@ function themename_customize_register($wp_customize)
   ));
 
   //  =============================
+  //  = Date Input                =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_date_input', array(
+    'default'           => '1983-01-01',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'transport'         => 'refresh',
+    'validate_callback' => 'validate_date_input',
+  ));
+
+    $wp_customize->add_control('themename_date_control', array(
+    'type'        => 'date',
+    'label'       => __('Date input', 'themename'),
+    'description' => __('This is date input option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_date_input',
+    'priority'    => 8,
+  ));
+
+  //  =============================
   //  = Color Picker              =
   //  =============================
 
@@ -208,7 +229,7 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 8,
+    'priority'    => 9,
   )));
 }
 
@@ -258,6 +279,14 @@ function validate_time_input( $validity, $value ) {
   $value = trim($value ?? '');
   if ( !$value || !preg_match('/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', $value) ) {
       $validity->add( 'required', __( 'You have to enter correct time in HH:MM format.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_date_input( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value || !preg_match('/^([1-9][0-9]{3})(-)((01|03|05|07|08|10|12)(-)((0|1|2)[0-9]|30|31))|([1-9][0-9]{3})(-)((04|06|09|11)(-)((0|1|2)[0-9]|30))|([1-9][0-9]{3})(-)((02)(-)((0|1|2)[0-9]))$/', $value) ) {
+      $validity->add( 'required', __( 'You have to enter correct date in YYYY-MM-DD format.', 'themename' ) );
   }
   return $validity;
 }
