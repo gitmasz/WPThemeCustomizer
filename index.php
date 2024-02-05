@@ -18,6 +18,7 @@
       <p>Email address from email input: <?php echo get_theme_mod( 'themename_theme_option_email_input', 'testing@hotmail.com' ); ?></p>
       <p>Time from time input: <?php echo get_theme_mod( 'themename_theme_option_time_input', '12:00' ); ?></p>
       <p>Date from date input: <?php echo get_theme_mod( 'themename_theme_option_date_input', '1983-01-01' ); ?></p>
+      <p>Date and time from datetime-local input: <?php echo date_format(date_create(get_theme_mod( 'themename_theme_option_datetime_input', '1983-01-01T12:00' )),'H:i d/m/Y'); ?></p>
     </div>
   </div>
   <?php wp_footer(); ?>

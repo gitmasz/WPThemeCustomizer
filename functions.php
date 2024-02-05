@@ -117,7 +117,7 @@ function themename_customize_register($wp_customize)
     'validate_callback' => 'validate_url_input',
   ));
 
-    $wp_customize->add_control('themename_url_control', array(
+  $wp_customize->add_control('themename_url_control', array(
     'type'        => 'url',
     'label'       => __('URL input', 'themename'),
     'description' => __('This is URL input option description.', 'themename'),
@@ -138,7 +138,7 @@ function themename_customize_register($wp_customize)
     'validate_callback' => 'validate_tel_input',
   ));
 
-    $wp_customize->add_control('themename_tel_control', array(
+  $wp_customize->add_control('themename_tel_control', array(
     'type'        => 'tel',
     'label'       => __('Tel input', 'themename'),
     'description' => __('This is tel input option description.', 'themename'),
@@ -160,7 +160,7 @@ function themename_customize_register($wp_customize)
     'validate_callback' => 'validate_email_input',
   ));
 
-    $wp_customize->add_control('themename_email_control', array(
+  $wp_customize->add_control('themename_email_control', array(
     'type'        => 'email',
     'label'       => __('Email input', 'themename'),
     'description' => __('This is email input option description.', 'themename'),
@@ -181,7 +181,7 @@ function themename_customize_register($wp_customize)
     'validate_callback' => 'validate_time_input',
   ));
 
-    $wp_customize->add_control('themename_time_control', array(
+  $wp_customize->add_control('themename_time_control', array(
     'type'        => 'time',
     'label'       => __('Time input', 'themename'),
     'description' => __('This is time input option description.', 'themename'),
@@ -202,13 +202,34 @@ function themename_customize_register($wp_customize)
     'validate_callback' => 'validate_date_input',
   ));
 
-    $wp_customize->add_control('themename_date_control', array(
+  $wp_customize->add_control('themename_date_control', array(
     'type'        => 'date',
     'label'       => __('Date input', 'themename'),
     'description' => __('This is date input option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_date_input',
     'priority'    => 8,
+  ));
+
+  //  =============================
+  //  = DateTime Local Input      =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_datetime_input', array(
+    'default'           => '1983-01-01T12:00',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'transport'         => 'refresh',
+    'validate_callback' => 'validate_datetime_input',
+  ));
+
+  $wp_customize->add_control('themename_datetime_control', array(
+    'type'        => 'datetime-local',
+    'label'       => __('DateTime local input', 'themename'),
+    'description' => __('This is DateTime local input option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_datetime_input',
+    'priority'    => 9,
   ));
 
   //  =============================
@@ -229,7 +250,7 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 9,
+    'priority'    => 10,
   )));
 }
 
@@ -277,7 +298,7 @@ function validate_email_input( $validity, $value ) {
 
 function validate_time_input( $validity, $value ) {
   $value = trim($value ?? '');
-  if ( !$value || !preg_match('/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', $value) ) {
+  if ( !$value || !preg_match('/^(([0-1]?[0-9]|2[0-3]):[0-5][0-9])$/', $value) ) {
       $validity->add( 'required', __( 'You have to enter correct time in HH:MM format.', 'themename' ) );
   }
   return $validity;
@@ -285,8 +306,16 @@ function validate_time_input( $validity, $value ) {
 
 function validate_date_input( $validity, $value ) {
   $value = trim($value ?? '');
-  if ( !$value || !preg_match('/^([1-9][0-9]{3})(-)((01|03|05|07|08|10|12)(-)((0|1|2)[0-9]|30|31))|([1-9][0-9]{3})(-)((04|06|09|11)(-)((0|1|2)[0-9]|30))|([1-9][0-9]{3})(-)((02)(-)((0|1|2)[0-9]))$/', $value) ) {
+  if ( !$value || !preg_match('/^(([1-9][0-9]{3})(-)((01|03|05|07|08|10|12)(-)((0|1|2)[0-9]|30|31))|([1-9][0-9]{3})(-)((04|06|09|11)(-)((0|1|2)[0-9]|30))|([1-9][0-9]{3})(-)((02)(-)((0|1|2)[0-9])))$/', $value) ) {
       $validity->add( 'required', __( 'You have to enter correct date in YYYY-MM-DD format.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_datetime_input( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value || !preg_match('/^(([1-9][0-9]{3})(-)((01|03|05|07|08|10|12)(-)((0|1|2)[0-9]|30|31))|([1-9][0-9]{3})(-)((04|06|09|11)(-)((0|1|2)[0-9]|30))|([1-9][0-9]{3})(-)((02)(-)((0|1|2)[0-9])))(T)(([0-1]?[0-9]|2[0-3]):[0-5][0-9])$/', $value) ) {
+      $validity->add( 'required', __( 'You have to enter correct date and time in YYYY-MM-DDTHH:MM format.', 'themename' ) );
   }
   return $validity;
 }
