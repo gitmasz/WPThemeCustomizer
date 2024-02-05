@@ -16,6 +16,7 @@
       <p>Address from URL input: <?php echo get_theme_mod( 'themename_theme_option_url_input', 'https://imasz.net' ); ?></p>
       <p>Phone number from tel input: <?php echo get_theme_mod( 'themename_theme_option_tel_input', '+48 123 456 789' ); ?></p>
       <p>Email address from email input: <?php echo get_theme_mod( 'themename_theme_option_email_input', 'testing@hotmail.com' ); ?></p>
+      <p>Time from time input: <?php echo get_theme_mod( 'themename_theme_option_time_input', '12:00' ); ?></p>
     </div>
   </div>
   <?php wp_footer(); ?>

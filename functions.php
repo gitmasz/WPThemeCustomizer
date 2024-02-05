@@ -170,6 +170,27 @@ function themename_customize_register($wp_customize)
   ));
 
   //  =============================
+  //  = Time Input                =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_time_input', array(
+    'default'           => '12:00',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'transport'         => 'refresh',
+    'validate_callback' => 'validate_time_input',
+  ));
+
+    $wp_customize->add_control('themename_time_control', array(
+    'type'        => 'time',
+    'label'       => __('Time input', 'themename'),
+    'description' => __('This is time input option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_time_input',
+    'priority'    => 7,
+  ));
+
+  //  =============================
   //  = Color Picker              =
   //  =============================
 
@@ -187,7 +208,7 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 7,
+    'priority'    => 8,
   )));
 }
 
@@ -229,6 +250,14 @@ function validate_email_input( $validity, $value ) {
   $value = trim($value ?? '');
   if ( !$value || !preg_match('/^[\-0-9a-zA-Z\.\+_]+@[\-0-9a-zA-Z\.\+_]+\.[a-zA-Z]{2,5}$/', $value) ) {
       $validity->add( 'required', __( 'You have to enter correct email.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_time_input( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value || !preg_match('/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', $value) ) {
+      $validity->add( 'required', __( 'You have to enter correct time in HH:MM format.', 'themename' ) );
   }
   return $validity;
 }
