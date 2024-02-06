@@ -233,6 +233,27 @@ function themename_customize_register($wp_customize)
   ));
 
   //  =============================
+  //  = Checkbox Input            =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_checkbox_input', array(
+    'default'           => '',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'sanitize_callback' => 'themename_sanitize_checkbox', // custom sanitization function
+    'transport'         => 'refresh',
+  ));
+
+  $wp_customize->add_control('themename_checkbox_control', array(
+    'type'        => 'checkbox',
+    'label'       => __('Checkbox input', 'themename'),
+    'description' => __('This is checkbox input option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_checkbox_input',
+    'priority'    => 10,
+  ));
+
+  //  =============================
   //  = Color Picker              =
   //  =============================
 
@@ -250,11 +271,15 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 10,
+    'priority'    => 11,
   )));
 }
 
 add_action('customize_register', 'themename_customize_register');
+
+function themename_sanitize_checkbox( $input ){
+  return ( isset( $input ) ? true : false ); // returns true if checkbox is checked
+}
 
 function validate_text_input( $validity, $value ) {
   $value = trim($value ?? '');
