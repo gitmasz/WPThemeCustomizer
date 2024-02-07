@@ -11,7 +11,7 @@ add_action('wp_enqueue_scripts', 'theme_customizer_scripts');
 //  = https://developer.wordpress.org/themes/customize-api/customizer-objects/ =
 //  ============================================================================
 
-// remove_theme_mod( 'themename_theme_option_text_input' );
+// remove_theme_mod( 'themename_theme_option_radio_input' );
 
 function themename_customize_register($wp_customize)
 {
@@ -254,6 +254,31 @@ function themename_customize_register($wp_customize)
   ));
 
   //  =============================
+  //  = Radio Input               =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_radio_input', array(
+    'default'    => 'Chosen option three',
+    'capability' => 'edit_theme_options',
+    'type'       => 'theme_mod',
+    'transport'  => 'refresh',
+  ));
+
+  $wp_customize->add_control('themename_radio_control', array(
+    'type'                  => 'radio',
+    'label'                 => __('Radio input', 'themename'),
+    'description'           => __('This is radio input option description.', 'themename'),
+    'choices'               => array(
+      'Chosen option one'   => __('Choice One', 'themename'),
+      'Chosen option two'   => __('Choice Two', 'themename'),
+      'Chosen option three' => __('Choice Three', 'themename')
+    ),
+    'section'               => 'themename_section',
+    'settings'              => 'themename_theme_option_radio_input',
+    'priority'              => 10,
+  ));
+
+  //  =============================
   //  = Color Picker              =
   //  =============================
 
@@ -271,7 +296,7 @@ function themename_customize_register($wp_customize)
     'description' => __('This is color picker option description.', 'themename'),
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_color_picker',
-    'priority'    => 11,
+    'priority'    => 12,
   )));
 }
 
