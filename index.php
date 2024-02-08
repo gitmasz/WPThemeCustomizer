@@ -21,6 +21,7 @@
       <p>Date and time from datetime-local input: <?php echo date_format(date_create(get_theme_mod( 'themename_theme_option_datetime_input', '1983-01-01T12:00' )),'H:i d/m/Y'); ?></p>
       <p>Checkbox state from checkbox input: <?php echo get_theme_mod( 'themename_theme_option_checkbox_input' ) ? 'true' : 'false'; ?></p>
       <p>Radio input value from radio input: <?php echo get_theme_mod( 'themename_theme_option_radio_input', 'Chosen option three' ); ?></p>
+      <p>Text from textarea: <?php echo get_theme_mod( 'themename_theme_option_textarea', 'Theme customizer textarea.' ); ?></p>
     </div>
   </div>
   <?php wp_footer(); ?>

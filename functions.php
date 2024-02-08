@@ -298,12 +298,34 @@ function themename_customize_register($wp_customize)
     'settings'    => 'themename_theme_option_color_picker',
     'priority'    => 12,
   )));
+
+  //  =============================
+  //  = Textarea                  =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_textarea', array(
+    'default'           => 'Theme customizer textarea.',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'sanitize_callback' => 'sanitize_text_field', // converts value to text only (no HTML tags)
+    'transport'         => 'refresh',
+    'validate_callback' => 'validate_textarea',
+  ));
+
+  $wp_customize->add_control('themename_textarea_control', array(
+    'type'        => 'textarea',
+    'label'       => __('Textarea', 'themename'),
+    'description' => __('This is textarea option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_textarea',
+    'priority'    => 13,
+  ));
 }
 
 add_action('customize_register', 'themename_customize_register');
 
 function themename_sanitize_checkbox( $input ){
-  return ( isset( $input ) ? true : false ); // returns true if checkbox is checked
+  return ( isset( $input ) && $input == 1 ? true : false ); // returns true if checkbox is checked
 }
 
 function validate_text_input( $validity, $value ) {
@@ -374,6 +396,17 @@ function validate_hex_color( $validity, $value ) {
   $value = trim($value ?? '');
   if ( !$value || !preg_match('/^#([a-f0-9]{6}|[a-f0-9]{3})$/', $value) ) {
       $validity->add( 'required', __( 'You have to enter correct hex color.', 'themename' ) );
+  }
+  return $validity;
+}
+
+function validate_textarea( $validity, $value ) {
+  $value = trim($value ?? '');
+  if ( !$value ) {
+    $validity->add( 'required', __( 'You must type some text.', 'themename' ) );
+  }
+  if ( $value && !preg_match('/^(.|\s){1,1000}$/', $value) ) {
+    $validity->add( 'required', __( 'Text can\'t be longer than 1000 characters.', 'themename' ) );
   }
   return $validity;
 }
