@@ -258,7 +258,7 @@ function themename_customize_register($wp_customize)
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_radio_input', array(
-    'default'    => 'Chosen option three',
+    'default'    => 'Chosen radio option three',
     'capability' => 'edit_theme_options',
     'type'       => 'theme_mod',
     'transport'  => 'refresh',
@@ -269,9 +269,9 @@ function themename_customize_register($wp_customize)
     'label'                 => __('Radio input', 'themename'),
     'description'           => __('This is radio input option description.', 'themename'),
     'choices'               => array(
-      'Chosen option one'   => __('Choice One', 'themename'),
-      'Chosen option two'   => __('Choice Two', 'themename'),
-      'Chosen option three' => __('Choice Three', 'themename')
+      'Chosen radio option one'   => __('Choice One', 'themename'),
+      'Chosen radio option two'   => __('Choice Two', 'themename'),
+      'Chosen radio option three' => __('Choice Three', 'themename')
     ),
     'section'               => 'themename_section',
     'settings'              => 'themename_theme_option_radio_input',
@@ -319,6 +319,32 @@ function themename_customize_register($wp_customize)
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_textarea',
     'priority'    => 13,
+  ));
+
+  //  =============================
+  //  = Select                    =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_select', array(
+    'default'    => 'Chosen select option two',
+    'capability' => 'edit_theme_options',
+    'type'       => 'theme_mod',
+    'transport'  => 'refresh',
+    // 'validate_callback' => 'validate_select',
+  ));
+
+  $wp_customize->add_control('themename_select_control', array(
+    'type'                         => 'select',
+    'label'                        => __('Select', 'themename'),
+    'description'                  => __('This is select option description.', 'themename'),
+    'choices'                      => array(
+      'Chosen select option one'   => __('Choice One', 'themename'),
+      'Chosen select option two'   => __('Choice Two', 'themename'),
+      'Chosen select option three' => __('Choice Three', 'themename')
+    ),
+    'section'                      => 'themename_section',
+    'settings'                     => 'themename_theme_option_select',
+    'priority'                     => 14,
   ));
 }
 
