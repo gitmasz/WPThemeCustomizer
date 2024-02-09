@@ -361,6 +361,7 @@ function themename_customize_register($wp_customize)
     'type'        => 'dropdown-pages',
     'label'       => __('Dropdown-Pages ', 'themename'),
     'description' => __('This is dropdown-pages option description.', 'themename'),
+    'allow_addition' => true,
     'section'     => 'themename_section',
     'settings'    => 'themename_theme_option_dropdown_pages',
     'priority'    => 15,
