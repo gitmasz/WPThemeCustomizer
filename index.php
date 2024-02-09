@@ -23,6 +23,7 @@
       <p>Radio input value from radio input: <?php echo get_theme_mod( 'themename_theme_option_radio_input', 'Chosen radio option three' ); ?></p>
       <p>Text from textarea: <?php echo get_theme_mod( 'themename_theme_option_textarea', 'Theme customizer textarea.' ); ?></p>
       <p>Select option value from select: <?php echo get_theme_mod( 'themename_theme_option_select', 'Chosen select option two' ); ?></p>
+      <p>Page ID from dropdown-pages: <?php echo get_theme_mod( 'themename_theme_option_dropdown_pages', '' ); ?></p>
     </div>
   </div>
   <?php wp_footer(); ?>

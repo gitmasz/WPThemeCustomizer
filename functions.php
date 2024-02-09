@@ -330,7 +330,6 @@ function themename_customize_register($wp_customize)
     'capability' => 'edit_theme_options',
     'type'       => 'theme_mod',
     'transport'  => 'refresh',
-    // 'validate_callback' => 'validate_select',
   ));
 
   $wp_customize->add_control('themename_select_control', array(
@@ -345,6 +344,26 @@ function themename_customize_register($wp_customize)
     'section'                      => 'themename_section',
     'settings'                     => 'themename_theme_option_select',
     'priority'                     => 14,
+  ));
+
+  //  =============================
+  //  = Dropdown-Pages            =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_dropdown_pages', array(
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'sanitize_callback' => 'absint', // input value is a page ID so it must be a positive integer
+    'transport'         => 'refresh',
+  ));
+
+  $wp_customize->add_control('themename_dropdown_pages_control', array(
+    'type'        => 'dropdown-pages',
+    'label'       => __('Dropdown-Pages ', 'themename'),
+    'description' => __('This is dropdown-pages option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_dropdown_pages',
+    'priority'    => 15,
   ));
 }
 
