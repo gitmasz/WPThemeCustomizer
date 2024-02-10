@@ -7,7 +7,13 @@
 	<?php wp_head(); ?>
 </head>
 <body>
-  <div class="fullpage-message" style="background-color:<?php echo get_theme_mod( 'themename_theme_option_color_picker', '#00aad4' ); ?>">
+  <div
+    class="fullpage-message"
+    style="
+      background-color:<?php echo get_theme_mod( 'themename_theme_option_color_picker', '#00aad4' ); ?>;
+      background-image:url(<?php echo wp_get_attachment_image_url(get_theme_mod( 'themename_theme_option_media_uploader', '' ), 'full'); ?>);
+    "
+  >
     <div class="content fullpage-message__content">
       <h1>Theme Customizer</h1>
       <p><?php echo get_theme_mod( 'themename_theme_option_text_input', 'Theme customizer input text.' ); ?></p>

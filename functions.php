@@ -358,14 +358,34 @@ function themename_customize_register($wp_customize)
   ));
 
   $wp_customize->add_control('themename_dropdown_pages_control', array(
-    'type'        => 'dropdown-pages',
-    'label'       => __('Dropdown-Pages ', 'themename'),
-    'description' => __('This is dropdown-pages option description.', 'themename'),
+    'type'           => 'dropdown-pages',
+    'label'          => __('Dropdown-Pages', 'themename'),
+    'description'    => __('This is dropdown-pages option description.', 'themename'),
     'allow_addition' => true,
-    'section'     => 'themename_section',
-    'settings'    => 'themename_theme_option_dropdown_pages',
-    'priority'    => 15,
+    'section'        => 'themename_section',
+    'settings'       => 'themename_theme_option_dropdown_pages',
+    'priority'       => 15,
   ));
+
+  //  =============================
+  //  = Media uploader            =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_media_uploader', array(
+    'capability' => 'edit_theme_options',
+    'type'       => 'theme_mod',
+    'sanitize_callback' => 'absint', // media uploader returns attachment ID so it must be a positive integer
+    'transport'  => 'refresh',
+  ));
+
+  $wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, 'themename_media_uploader_control', array(
+    'mime_type'   => 'image', // also accepts 'audio' and 'video'
+    'label'       => __('Media uploader', 'themename'),
+    'description' => __('This is media uploader option description.', 'themename'),
+    'section'     => 'themename_section',
+    'settings'    => 'themename_theme_option_media_uploader',
+    'priority'    => 16,
+  )));
 }
 
 add_action('customize_register', 'themename_customize_register');
