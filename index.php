@@ -30,6 +30,13 @@
       <p>Text from textarea: <?php echo get_theme_mod( 'themename_theme_option_textarea', 'Theme customizer textarea.' ); ?></p>
       <p>Select option value from select: <?php echo get_theme_mod( 'themename_theme_option_select', 'Chosen select option two' ); ?></p>
       <p>Page ID from dropdown-pages: <?php echo get_theme_mod( 'themename_theme_option_dropdown_pages', '' ); ?></p>
+      <h2>Sample page content</h2>
+      <?php if(is_page('sample-page')){ ?>
+        <p><?php echo get_theme_mod( 'themename_theme_option_sample_page_text', 'Theme customizer sample page text.' ); ?></p>
+        <p>Back to <a href="<?php echo get_home_url(); ?>">homepage</a></p>
+      <?php }else{ ?>
+        <p>Go to <a href="<?php echo get_permalink( get_page_by_path( 'sample-page' ) ); ?>">sample-page</a> to see content from customizer.</p>
+      <?php }; ?>
     </div>
   </div>
   <?php wp_footer(); ?>

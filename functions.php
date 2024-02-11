@@ -29,7 +29,16 @@ function themename_customize_register($wp_customize)
     'title'       => __('Customizer Section', 'themename'),
     'description' => __('Custom Customizer Section Description', 'themename'),
     'panel'       => 'themename_panel',
+    'active_callback' => 'is_front_page',
     'priority'    => 1,
+  ));
+
+  $wp_customize->add_section('themename_sample_page_section', array(
+    'title'       => __('Sample page Section', 'themename'),
+    'description' => __('Custom Customizer Section Description', 'themename'),
+    'panel'       => 'themename_panel',
+    'active_callback' => 'themename_is_sample_page', // custom function to check if it is a page with 'sample-page' slug
+    'priority'    => 2,
   ));
 
   //  =============================
@@ -386,9 +395,36 @@ function themename_customize_register($wp_customize)
     'settings'    => 'themename_theme_option_media_uploader',
     'priority'    => 16,
   )));
+
+  //  =============================
+  //  = Sample page text          =
+  //  =============================
+
+  $wp_customize->add_setting('themename_theme_option_sample_page_text', array(
+    'default'           => 'Theme customizer sample page text.',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
+    'sanitize_callback' => 'sanitize_text_field', // converts value to text only (no HTML tags)
+    'transport'         => 'refresh',
+    'validate_callback' => 'validate_text_input',
+  ));
+
+  $wp_customize->add_control('themename_sample_page_text_control', array(
+    'type'        => 'text',
+    'label'       => __('Sample page text', 'themename'),
+    'description' => __('This is sample page text option description.', 'themename'),
+    'section'     => 'themename_sample_page_section',
+    'settings'    => 'themename_theme_option_sample_page_text',
+    'active_callback' => 'themename_is_sample_page', // custom function to check if it is a page with 'sample-page' slug
+    'priority'    => 1,
+  ));
 }
 
 add_action('customize_register', 'themename_customize_register');
+
+function themename_is_sample_page() {
+  return is_page('sample-page');
+}
 
 function themename_sanitize_checkbox( $input ){
   return ( isset( $input ) && $input == 1 ? true : false ); // returns true if checkbox is checked
