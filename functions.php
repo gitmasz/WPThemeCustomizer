@@ -11,7 +11,28 @@ add_action('wp_enqueue_scripts', 'theme_customizer_scripts');
 //  = https://developer.wordpress.org/themes/customize-api/customizer-objects/ =
 //  ============================================================================
 
-// remove_theme_mod( 'themename_theme_option_radio_input' );
+// remove_theme_mod( 'themename_theme_option_text_input' ); // remove custom theme mod from database
+
+// function themename_remove_core_panels_and_sections( $wp_customize ) {
+//   $wp_customize->remove_panel( 'themes' ); // remove core panel 'Active theme' from customizer
+//   $wp_customize->remove_section( 'title_tagline' ); // remove core section 'Site Identity' from customizer
+//   $wp_customize->remove_section( 'static_front_page' ); // remove core section 'Homepage Settings' from customizer
+//   $wp_customize->remove_section( 'custom_css' ); // remove core section 'Additional CSS' from customizer
+// }
+
+// add_action( 'customize_register', 'themename_remove_core_panels_and_sections' );
+
+// function themename_remove_core_menu_panel( $wp_customize ) {
+//   remove_action( 'customize_controls_enqueue_scripts', array( $wp_customize->nav_menus, 'enqueue_scripts' ) );
+//   remove_action( 'customize_register', array( $wp_customize->nav_menus, 'customize_register' ) );
+//   remove_filter( 'customize_dynamic_setting_args', array( $wp_customize->nav_menus, 'filter_dynamic_setting_args' ) );
+//   remove_filter( 'customize_dynamic_setting_class', array( $wp_customize->nav_menus, 'filter_dynamic_setting_class' ) );
+//   remove_action( 'customize_controls_print_footer_scripts', array( $wp_customize->nav_menus, 'print_templates' ) );
+//   remove_action( 'customize_controls_print_footer_scripts', array( $wp_customize->nav_menus, 'available_items_template' ) );
+//   remove_action( 'customize_preview_init', array( $wp_customize->nav_menus, 'customize_preview_init' ) );
+// }
+
+// add_action( 'customize_register', 'themename_remove_core_menu_panel' ); // remove core panel 'Menus' from customizer
 
 function themename_customize_register($wp_customize)
 {
@@ -26,19 +47,19 @@ function themename_customize_register($wp_customize)
   );
 
   $wp_customize->add_section('themename_section', array(
-    'title'       => __('Customizer Section', 'themename'),
-    'description' => __('Custom Customizer Section Description', 'themename'),
-    'panel'       => 'themename_panel',
+    'title'           => __('Customizer Section', 'themename'),
+    'description'     => __('Custom Customizer Section Description', 'themename'),
+    'panel'           => 'themename_panel',
     'active_callback' => 'is_front_page',
-    'priority'    => 1,
+    'priority'        => 1,
   ));
 
   $wp_customize->add_section('themename_sample_page_section', array(
-    'title'       => __('Sample page Section', 'themename'),
-    'description' => __('Custom Customizer Section Description', 'themename'),
-    'panel'       => 'themename_panel',
+    'title'           => __('Sample page Section', 'themename'),
+    'description'     => __('Custom Customizer Section Description', 'themename'),
+    'panel'           => 'themename_panel',
     'active_callback' => 'themename_is_sample_page', // custom function to check if it is a page with 'sample-page' slug
-    'priority'    => 2,
+    'priority'        => 2,
   ));
 
   //  =============================
@@ -274,17 +295,17 @@ function themename_customize_register($wp_customize)
   ));
 
   $wp_customize->add_control('themename_radio_control', array(
-    'type'                  => 'radio',
-    'label'                 => __('Radio input', 'themename'),
-    'description'           => __('This is radio input option description.', 'themename'),
-    'choices'               => array(
+    'type'                        => 'radio',
+    'label'                       => __('Radio input', 'themename'),
+    'description'                 => __('This is radio input option description.', 'themename'),
+    'choices'                     => array(
       'Chosen radio option one'   => __('Choice One', 'themename'),
       'Chosen radio option two'   => __('Choice Two', 'themename'),
       'Chosen radio option three' => __('Choice Three', 'themename')
     ),
-    'section'               => 'themename_section',
-    'settings'              => 'themename_theme_option_radio_input',
-    'priority'              => 10,
+    'section'                     => 'themename_section',
+    'settings'                    => 'themename_theme_option_radio_input',
+    'priority'                    => 10,
   ));
 
   //  =============================
@@ -381,10 +402,10 @@ function themename_customize_register($wp_customize)
   //  =============================
 
   $wp_customize->add_setting('themename_theme_option_media_uploader', array(
-    'capability' => 'edit_theme_options',
-    'type'       => 'theme_mod',
+    'capability'        => 'edit_theme_options',
+    'type'              => 'theme_mod',
     'sanitize_callback' => 'absint', // media uploader returns attachment ID so it must be a positive integer
-    'transport'  => 'refresh',
+    'transport'         => 'refresh',
   ));
 
   $wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, 'themename_media_uploader_control', array(
@@ -410,14 +431,19 @@ function themename_customize_register($wp_customize)
   ));
 
   $wp_customize->add_control('themename_sample_page_text_control', array(
-    'type'        => 'text',
-    'label'       => __('Sample page text', 'themename'),
-    'description' => __('This is sample page text option description.', 'themename'),
-    'section'     => 'themename_sample_page_section',
-    'settings'    => 'themename_theme_option_sample_page_text',
+    'type'            => 'text',
+    'label'           => __('Sample page text', 'themename'),
+    'description'     => __('This is sample page text option description.', 'themename'),
+    'section'         => 'themename_sample_page_section',
+    'settings'        => 'themename_theme_option_sample_page_text',
     'active_callback' => 'themename_is_sample_page', // custom function to check if it is a page with 'sample-page' slug
-    'priority'    => 1,
+    'priority'        => 1,
   ));
+
+  // Alternate way to attach active callback (works only for custom panels, sections and controls after they calls)
+  // $wp_customize->get_panel( 'themename_panel' )->active_callback = 'is_front_page'; // hides panel
+  // $wp_customize->get_section( 'themename_section' )->active_callback = function () { return false; }; // hide section
+  // $wp_customize->get_control( 'themename_text_control' )->active_callback = function () { return false; }; // hide control
 }
 
 add_action('customize_register', 'themename_customize_register');
