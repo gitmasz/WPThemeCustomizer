@@ -34,6 +34,13 @@ add_action('wp_enqueue_scripts', 'theme_customizer_scripts');
 
 // add_action( 'customize_register', 'themename_remove_core_menu_panel' ); // remove core panel 'Menus' from customizer
 
+get_role('contributor')->add_cap('edit_theme_options'); // gives contributors access to customizer
+// get_role('contributor')->remove_cap('edit_theme_options'); // removes contributors access to customizer
+get_role('editor')->add_cap('edit_theme_options'); // gives editors access to customizer
+// get_role('editor')->remove_cap('edit_theme_options'); // removes editors access to customizer
+get_role('author')->add_cap('edit_theme_options'); // gives authors access to customizer
+// get_role('author')->remove_cap('edit_theme_options'); // removes authors access to customizer
+
 function themename_customize_register($wp_customize)
 {
 
